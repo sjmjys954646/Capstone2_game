@@ -207,17 +207,17 @@ public class PlayerMove_Rito_Follow : MonoBehaviour
             // TP -> FP
             if (State.isCurrentFp)
             {
-                Vector3 tpEulerAngle = Com.tpRig.localEulerAngles;
-                Com.fpRig.localEulerAngles = Vector3.right * tpEulerAngle.x;
-                Com.fpRoot.localEulerAngles = Vector3.up * tpEulerAngle.y;
+                Vector3 tpEulerAngle = Com.tpRig.eulerAngles;
+                Com.fpRoot.eulerAngles = Vector3.right * tpEulerAngle.x;
+                Com.fpRoot.eulerAngles = Vector3.up * tpEulerAngle.y;
             }
             // FP -> TP
             else
             {
                 Vector3 newRot = default;
-                newRot.x = Com.fpRig.localEulerAngles.x;
-                newRot.y = Com.fpRoot.localEulerAngles.y;
-                Com.tpRig.localEulerAngles = newRot;
+                newRot.x = Com.fpRoot.eulerAngles.x;
+                newRot.y = Com.fpRoot.eulerAngles.y;
+                Com.tpRig.eulerAngles = newRot;
             }
         }
     }
