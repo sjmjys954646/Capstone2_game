@@ -7,7 +7,7 @@ using TMPro;
 public class ScenarioManager : MonoBehaviour
 {
     public ExcelParser excelParser;
-    public GameManager gameManager;
+    private GameManager gameManager;
     public List<Dictionary<string, object>> eventNumDialogue;
     public CharacterSelect characterSelect;
 
@@ -20,8 +20,43 @@ public class ScenarioManager : MonoBehaviour
     public int conversationIdx;
     public int curConversationNum;
 
+    /***********************************************************************
+    *                               SingleTon
+    ***********************************************************************/
+    #region .
+    private static ScenarioManager instance = null;
+
+    public static ScenarioManager Instance
+    {
+        get
+        {
+            if (null == instance)
+            {
+                return null;
+            }
+            return instance;
+        }
+    }
+    #endregion
+
+    void Awake()
+    {
+        if (null == instance)
+        {           
+            instance = this;
+            //DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {        
+            Destroy(this.gameObject);
+        }
+    }
+
+
     private void Start()
     {
+        gameManager = GameManager.Instance;
+
         FirstScenarioStart();
     }
     

@@ -5,13 +5,47 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     public PlayerMove_Rito_Follow playerMoveInput;
-    public ScenarioManager scenarioInput;
-    public GameManager gameManager;
+
+    private ScenarioManager scenarioInput;
+    private GameManager gameManager;
+
+    /***********************************************************************
+    *                               SingleTon
+    ***********************************************************************/
+    #region .
+    private static InputManager instance = null;
+
+    public static InputManager Instance
+    {
+        get
+        {
+            if (null == instance)
+            {
+                return null;
+            }
+            return instance;
+        }
+    }
+    #endregion
+
+    void Awake()
+    {
+        if (null == instance)
+        {
+            instance = this;
+            //DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        // 플레이어가 생성된 이후에 playerMoveInput을 만들어줘야됨
+        scenarioInput = ScenarioManager.Instance;
+        gameManager = GameManager.Instance;
     }
 
     // Update is called once per frame
