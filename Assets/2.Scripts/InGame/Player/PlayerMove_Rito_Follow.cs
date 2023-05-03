@@ -37,7 +37,7 @@ public class PlayerMove_Rito_Follow : MonoBehaviour
         public KeyCode moveRight = KeyCode.D;
         public KeyCode run = KeyCode.LeftShift;
         public KeyCode jump = KeyCode.Space;
-        public KeyCode switchCamera = KeyCode.Tab;
+        public KeyCode switchCamera = KeyCode.Z;
         public KeyCode showCursor = KeyCode.LeftAlt;
     }
     [Serializable]
@@ -128,13 +128,13 @@ public class PlayerMove_Rito_Follow : MonoBehaviour
 
     private void Update()
     {
-        CameraViewToggle();
-        SetValuesByKeyInput();
-        ShowCursorToggle();
-        CheckDistanceFromGround();
-        Rotate();
-        Move();
-        Jump();
+        //CameraViewToggle();
+        //SetValuesByKeyInput();
+        //ShowCursorToggle();
+        //CheckDistanceFromGround();
+        //Rotate();
+        //Move();
+        //Jump();
     }
 
     #endregion
@@ -196,32 +196,38 @@ public class PlayerMove_Rito_Follow : MonoBehaviour
     *                               Methods
     ***********************************************************************/
     #region .
-    private void CameraViewToggle()
+    public void CameraViewToggle()
     {
         if (Input.GetKeyDown(Key.switchCamera))
         {
-            State.isCurrentFp = !State.isCurrentFp;
-            Com.fpCamObject.SetActive(State.isCurrentFp);
-            Com.tpCamObject.SetActive(!State.isCurrentFp);
-
-            // TP -> FP
-            if (State.isCurrentFp)
-            {
-                Vector3 tpEulerAngle = Com.tpRig.eulerAngles;
-                Com.fpRoot.eulerAngles = Vector3.right * tpEulerAngle.x;
-                Com.fpRoot.eulerAngles = Vector3.up * tpEulerAngle.y;
-            }
-            // FP -> TP
-            else
-            {
-                Vector3 newRot = default;
-                newRot.x = Com.fpRoot.eulerAngles.x;
-                newRot.y = Com.fpRoot.eulerAngles.y;
-                Com.tpRig.eulerAngles = newRot;
-            }
+            CameraViewToggleInside();
         }
     }
-    private void SetValuesByKeyInput()
+
+    public void CameraViewToggleInside()
+    {
+        State.isCurrentFp = !State.isCurrentFp;
+        Com.fpCamObject.SetActive(State.isCurrentFp);
+        Com.tpCamObject.SetActive(!State.isCurrentFp);
+
+        // TP -> FP
+        if (State.isCurrentFp)
+        {
+            Vector3 tpEulerAngle = Com.tpRig.eulerAngles;
+            Com.fpRoot.eulerAngles = Vector3.right * tpEulerAngle.x;
+            Com.fpRoot.eulerAngles = Vector3.up * tpEulerAngle.y;
+        }
+        // FP -> TP
+        else
+        {
+            Vector3 newRot = default;
+            newRot.x = Com.fpRoot.eulerAngles.x;
+            newRot.y = Com.fpRoot.eulerAngles.y;
+            Com.tpRig.eulerAngles = newRot;
+        }
+    }
+
+    public void SetValuesByKeyInput()
     {
         float h = 0f, v = 0f;
 
@@ -238,7 +244,7 @@ public class PlayerMove_Rito_Follow : MonoBehaviour
         State.isRunning = Input.GetKey(Key.run);
     }
 
-    private void Rotate()
+    public void Rotate()
     {
         if (State.isCurrentFp)
         {
@@ -254,7 +260,7 @@ public class PlayerMove_Rito_Follow : MonoBehaviour
     }
 
     /// <summary> 1인칭 회전 </summary>
-    private void RotateFP()
+    public void RotateFP()
     {
         float deltaCoef = Time.deltaTime * 50f;
 
@@ -285,7 +291,7 @@ public class PlayerMove_Rito_Follow : MonoBehaviour
     }
 
     /// <summary> 3인칭 회전 </summary>
-    private void RotateTP()
+    public void RotateTP()
     {
         float deltaCoef = Time.deltaTime * 50f;
 
@@ -320,7 +326,7 @@ public class PlayerMove_Rito_Follow : MonoBehaviour
     }
 
     /// <summary> 3인칭일 경우 FP Root 회전 </summary>
-    private void RotateFPRoot()
+    public void RotateFPRoot()
     {
         if (State.isMoving == false) return;
 
@@ -334,7 +340,7 @@ public class PlayerMove_Rito_Follow : MonoBehaviour
         Com.fpRoot.eulerAngles = Vector3.up * Mathf.Lerp(currentY, nextY, 0.1f);
     }
 
-    private void Move()
+    public void Move()
     {
         // 이동하지 않는 경우, 미끄럼 방지
         if (State.isMoving == false)
@@ -361,7 +367,7 @@ public class PlayerMove_Rito_Follow : MonoBehaviour
         Com.rBody.velocity = new Vector3(_worldMove.x, Com.rBody.velocity.y, _worldMove.z);
     }
 
-    private void ShowCursorToggle()
+    public void ShowCursorToggle()
     {
         if (Input.GetKeyDown(Key.showCursor))
             State.isCursorActive = !State.isCursorActive;
@@ -369,12 +375,12 @@ public class PlayerMove_Rito_Follow : MonoBehaviour
         ShowCursor(State.isCursorActive);
     }
 
-    private void ShowCursor(bool value)
+    public void ShowCursor(bool value)
     {
         Cursor.visible = value;
         Cursor.lockState = value ? CursorLockMode.None : CursorLockMode.Locked;
     }
-    private void CheckDistanceFromGround()
+    public void CheckDistanceFromGround()
     {
         Vector3 ro = transform.position + Vector3.up;
         Vector3 rd = Vector3.down;
@@ -391,7 +397,7 @@ public class PlayerMove_Rito_Follow : MonoBehaviour
         State.isGrounded = _distFromGround <= _groundCheckRadius + threshold;
     }
 
-    private void Jump()
+    public void Jump()
     {
         if (!State.isGrounded) return;
 

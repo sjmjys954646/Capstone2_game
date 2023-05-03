@@ -10,13 +10,18 @@ public class ScenarioManager : MonoBehaviour
     private GameManager gameManager;
     public List<Dictionary<string, object>> eventNumDialogue;
     public CharacterSelect characterSelect;
+    public Tutorial tutorialManager;
 
     public TMP_Text talker;
     public TMP_Text content;
 
     public GameObject conversationGuide;
-
     public GameObject Conversation;
+
+    public GameObject tutorial;
+    public GameObject KeyGuideUI;
+    public GameObject world;
+
     public int conversationIdx;
     public int curConversationNum;
 
@@ -75,8 +80,24 @@ public class ScenarioManager : MonoBehaviour
 
     public void TutorialStart()
     {
-
+        tutorialManager.TutorialStart();
     }
+
+    public void TutorialEnd()
+    {
+        tutorial.SetActive(false);
+        KeyGuideUI.SetActive(false);
+        world.SetActive(true);
+        GameManager.Instance.isTutorial = false;
+
+        Color col = Conversation.transform.GetChild(0).GetComponent<Image>().color;
+        col.a = 0.9f;
+        Conversation.transform.GetChild(0).GetComponent<Image>().color = col;
+        col = Conversation.transform.GetChild(1).GetComponent<Image>().color;
+        col.a = 0.9f;
+        Conversation.transform.GetChild(1).GetComponent<Image>().color = col;
+    }
+
     /***********************************************************************
     *                               Conversation
     ***********************************************************************/
@@ -95,6 +116,8 @@ public class ScenarioManager : MonoBehaviour
     {
         Conversation.SetActive(false);
         gameManager.conversationGoing = false;
+        if (gameManager.player!=null)
+            gameManager.player.GetComponent<PlayerStatus>().isTalking = false;
     }
 
     public void GetEventNumberDialogue(int eventNum)

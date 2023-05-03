@@ -5,10 +5,14 @@ using UnityEngine;
 public class CharacterSelect : MonoBehaviour
 {
     public GameManager gameManager;
-    public ScenarioManager scenarioManager;
+    private ScenarioManager scenarioManager;
     public GameObject characterSelectButtons;
     public GameObject characterSelectGameObject;
     public GameObject selectGuide;
+
+    //0 cube
+    //1 sphere
+    //2 capsule
 
     [SerializeField]
     private List<GameObject> characters = new List<GameObject>();
@@ -18,6 +22,11 @@ public class CharacterSelect : MonoBehaviour
     private float speed = 0.01f;
     [SerializeField]
     private int middle = 0;
+
+    private void Start()
+    {
+        scenarioManager = ScenarioManager.Instance;
+    }
 
     public void CharacterSelectStart()
     {
@@ -36,11 +45,13 @@ public class CharacterSelect : MonoBehaviour
 
     public void characterSelectEnd()
     {
-        gameManager.playerAsset = characters[middle];
+        gameManager.playerAssetNum = characters[middle].GetComponent<IngameSelect>().index;
         // ¡‹¿Œ«œ∞Ì ∆©≈‰∏ÆæÛ Ω√¿€
         characterSelectButtons.SetActive(false);
         characterSelectGameObject.SetActive(false);
         selectGuide.SetActive(false);
+
+        scenarioManager.TutorialStart();
     }
 
     private void charactersDisable()

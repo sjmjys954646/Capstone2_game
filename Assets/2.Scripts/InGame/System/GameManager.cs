@@ -5,8 +5,13 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public bool conversationGoing = false;
+    public bool isPlayerExist = false;
+    public bool isTutorial = false;
 
-    public GameObject playerAsset ;
+    public int playerAssetNum;
+    public List<GameObject> characters = new List<GameObject>();
+
+    public GameObject player;
 
     /***********************************************************************
     *                               SingleTon
@@ -32,7 +37,7 @@ public class GameManager : MonoBehaviour
         if (null == instance)
         {
             instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            //DontDestroyOnLoad(this.gameObject);
         }
         else
         {
@@ -42,6 +47,6 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        
+
     }
 }

@@ -5,19 +5,23 @@ using UnityEngine;
 public class Npc : MonoBehaviour
 {
     public GameObject player;
+    public ScenarioManager scenarioManager;
 
-    
+    [SerializeField]
+    private int scenarioNum;
+
+    private void Start()
+    {
+        scenarioManager = ScenarioManager.Instance;
+    }
 
     public void Print()
     {
+        if (player == null)
+            player = GameManager.Instance.player;
+
         player.GetComponent<PlayerStatus>().isTalking = true;
-        StartCoroutine("talking");
+        scenarioManager.ConversationStart(scenarioNum);
     }
 
-    IEnumerator talking()
-    {
-        Debug.Log("I'm " + gameObject.name);
-        yield return new WaitForSeconds(1.0f);
-        player.GetComponent<PlayerStatus>().isTalking = false;
-    }
 }
