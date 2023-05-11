@@ -8,14 +8,14 @@ public class Npc : MonoBehaviour
     public ScenarioManager scenarioManager;
 
     [SerializeField]
-    private int scenarioNum;
+    protected int scenarioNum;
 
     private void Start()
     {
         scenarioManager = ScenarioManager.Instance;
     }
 
-    public void Print()
+    public virtual void Print()
     {
         if (player == null)
             player = GameManager.Instance.player;

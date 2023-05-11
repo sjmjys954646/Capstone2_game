@@ -57,24 +57,68 @@ public class CSVAssetReader
 
 public class ExcelParser : MonoBehaviour
 {
+    /***********************************************************************
+    *                               SingleTon
+    ***********************************************************************/
+    #region .
+    private static ExcelParser instance = null;
+
+    public static ExcelParser Instance
+    {
+        get
+        {
+            if (null == instance)
+            {
+                return null;
+            }
+            return instance;
+        }
+    }
+    #endregion
+
 
     [Header("로드할 TextAsset 데이터를 넣어주세요")]
-    public TextAsset myTxt;
+    public TextAsset dialogueText;
+    public TextAsset itemText;
 
     public List<Dictionary<string, object>> data;
 
     public List<List<Dictionary<string, object>>> dialogue;
+    public List<List<Dictionary<string, object>>> itemList;
 
-    private void Awake()
+    void Awake()
     {
-        TextLoad();
+        if (null == instance)
+        {
+            instance = this;
+            //DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
+
+        DialogueTextLoad();
         makeDialogue();
+
+        ItemTextLoad();
+        makeItemList();
+
+        //Debug.Log(itemList[0][0]["ItemName"].ToString());
     }
 
-    public void TextLoad()
+
+    public void DialogueTextLoad()
     {
-        myTxt.text.Substring(0, myTxt.text.Length - 1);
-        data = CSVAssetReader.Read(myTxt); 
+        dialogueText.text.Substring(0, dialogueText.text.Length - 1);
+        data = CSVAssetReader.Read(dialogueText); 
+    }
+
+    public void ItemTextLoad()
+    {
+        itemText.text.Substring(0, itemText.text.Length - 1);
+        data = CSVAssetReader.Read(itemText);
     }
 
     public void makeDialogue()
@@ -99,6 +143,28 @@ public class ExcelParser : MonoBehaviour
             //Debug.Log(data[i]["Talker"].ToString());
             //Debug.Log(data[i]["Conversation"].ToString());
             dialogue[Convert.ToInt32(data[i]["EventNumber"].ToString())].Add(dic);
+        }
+    }
+
+    public void makeItemList()
+    {
+        int finalNum = Convert.ToInt32(data[data.Count - 1]["ItemNumber"].ToString());
+
+        itemList = new List<List<Dictionary<string, object>>>(finalNum + 1);
+
+        for (int i = 0; i < finalNum + 1; i++)
+        {
+            List<Dictionary<string, object>> p = new List<Dictionary<string, object>>();
+            itemList.Add(p);
+        }
+
+        for (int i = 0; i < data.Count; i++)
+        {
+            Dictionary<string, object> dic = new Dictionary<string, object>() {
+                { "ItemName", data[i]["ItemName"].ToString() },
+                { "ItemDescription", data[i]["ItemDescription"].ToString() },
+            };
+            itemList[Convert.ToInt32(data[i]["ItemNumber"].ToString())].Add(dic);
         }
     }
 }

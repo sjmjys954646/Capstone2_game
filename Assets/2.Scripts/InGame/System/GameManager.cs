@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public bool conversationGoing = false;
     public bool isPlayerExist = false;
     public bool isTutorial = false;
+    public bool isInventoryOpen = false;
 
     public int playerAssetNum;
     public List<GameObject> characters = new List<GameObject>();

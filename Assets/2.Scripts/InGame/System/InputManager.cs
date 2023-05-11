@@ -51,16 +51,36 @@ public class InputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!gameManager.conversationGoing && gameManager.isPlayerExist)
+        if(gameManager.isPlayerExist)
         {
-            gameManager.player.GetComponent<PlayerMove_Rito_Follow>().CameraViewToggle();
-            gameManager.player.GetComponent<PlayerMove_Rito_Follow>().SetValuesByKeyInput();
-            gameManager.player.GetComponent<PlayerMove_Rito_Follow>().ShowCursorToggle();
-            gameManager.player.GetComponent<PlayerMove_Rito_Follow>().CheckDistanceFromGround();
-            gameManager.player.GetComponent<PlayerMove_Rito_Follow>().Rotate();
-            gameManager.player.GetComponent<PlayerMove_Rito_Follow>().Move();
-            gameManager.player.GetComponent<PlayerMove_Rito_Follow>().Jump();
+            if (!gameManager.conversationGoing)
+            {
+                gameManager.player.GetComponent<PlayerMove_Rito_Follow>().CameraViewToggle();
+                gameManager.player.GetComponent<PlayerMove_Rito_Follow>().SetValuesByKeyInput();
+                gameManager.player.GetComponent<PlayerMove_Rito_Follow>().ShowCursorToggle();
+                gameManager.player.GetComponent<PlayerMove_Rito_Follow>().CheckDistanceFromGround();
+                gameManager.player.GetComponent<PlayerMove_Rito_Follow>().Rotate();
+                gameManager.player.GetComponent<PlayerMove_Rito_Follow>().Move();
+                gameManager.player.GetComponent<PlayerMove_Rito_Follow>().Jump();
+            }
+
+            if (gameManager.isInventoryOpen)
+            {
+                if (Input.GetKeyDown(KeyCode.I))
+                {
+                    InventoryManager.Instance.CloseInventory();
+                }
+            }
+            else if (!gameManager.isInventoryOpen)
+            {
+                if (Input.GetKeyDown(KeyCode.I))
+                {
+                    InventoryManager.Instance.OpenInventory();
+                }
+            }
         }
+
+        
 
         if (gameManager.conversationGoing)
         {
