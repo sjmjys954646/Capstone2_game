@@ -18,12 +18,18 @@ public class ScenarioManager : MonoBehaviour
     public GameObject conversationGuide;
     public GameObject Conversation;
 
+    public TMP_Text itemTalker;
+    public TMP_Text itemContent;
+
+    public GameObject itemConversation;
+
     public GameObject tutorial;
     public GameObject KeyGuideUI;
     public GameObject world;
 
     public int conversationIdx;
     public int curConversationNum;
+    public int curItemConversationNum;
 
     /***********************************************************************
     *                               SingleTon
@@ -132,6 +138,34 @@ public class ScenarioManager : MonoBehaviour
 
         talker.text = eventNumDialogue[conversationIdx]["Talker"].ToString();
         content.text = eventNumDialogue[conversationIdx]["Conversation"].ToString();
+    }
+    #endregion
+
+    /***********************************************************************
+    *                               ItemConversation
+    ***********************************************************************/
+    #region .
+
+    public void ItemConversationStart(int ItemNum)
+    {
+        curItemConversationNum = ItemNum;
+        itemConversation.SetActive(true);
+        gameManager.itemconversationGoing = true;
+        changeItemText();
+    }
+
+    public void ItemConversationEnd()
+    {
+        itemConversation.SetActive(false);
+        gameManager.itemconversationGoing = false;
+        if (gameManager.player != null)
+            gameManager.player.GetComponent<PlayerStatus>().isTalking = false;
+    }
+
+    public void changeItemText()
+    {
+        itemTalker.text = ItemManager.Instance.itemTotalList[curItemConversationNum].showItemName();
+        itemContent.text = ItemManager.Instance.itemTotalList[curItemConversationNum].showItemDescription();
     }
     #endregion
 

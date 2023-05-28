@@ -22,8 +22,11 @@ public class DrWorldNpc : Npc
         else
         {
             //문제 출력
-
-
+            if(InventoryManager.Instance.InventoryContentNum() == 3)
+            {
+                PuzzleManager.Instance.PuzzleStart();
+            }
+            
 
             if (player == null)
                 player = GameManager.Instance.player;

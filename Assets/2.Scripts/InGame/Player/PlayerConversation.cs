@@ -22,5 +22,8 @@ public class PlayerConversation : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Npc") && isInteracting && !isTalking)
             other.gameObject.GetComponent<Npc>().Print();
+
+        if (other.gameObject.CompareTag("Item") && isInteracting && !isTalking)
+            other.gameObject.GetComponent<Item>().PrintAndGet();
     }
 }

@@ -53,7 +53,7 @@ public class InputManager : MonoBehaviour
     {
         if(gameManager.isPlayerExist)
         {
-            if (!gameManager.conversationGoing)
+            if (!gameManager.conversationGoing && !gameManager.itemconversationGoing)
             {
                 gameManager.player.GetComponent<PlayerMove_Rito_Follow>().CameraViewToggle();
                 gameManager.player.GetComponent<PlayerMove_Rito_Follow>().SetValuesByKeyInput();
@@ -63,6 +63,8 @@ public class InputManager : MonoBehaviour
                 gameManager.player.GetComponent<PlayerMove_Rito_Follow>().Move();
                 gameManager.player.GetComponent<PlayerMove_Rito_Follow>().Jump();
             }
+
+           
 
             if (gameManager.isInventoryOpen)
             {
@@ -96,6 +98,14 @@ public class InputManager : MonoBehaviour
                     scenarioInput.ConversationEnd();
 
                 scenarioInput.changeText();
+            }
+        }
+
+        if (gameManager.itemconversationGoing)
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                scenarioInput.ItemConversationEnd();
             }
         }
     }

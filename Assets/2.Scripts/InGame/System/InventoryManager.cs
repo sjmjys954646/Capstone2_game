@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject inventoryUI;
     [SerializeField]
-    private List<GameObject> inventoryContent = new List<GameObject>();
+    private List<Item> inventoryContent = new List<Item>();
     [SerializeField]
     private GameObject[,] inventoryUIIndiv = new GameObject[4, 5];
+
+    private int curInvenNum = 0;
 
 
     /***********************************************************************
@@ -42,7 +45,16 @@ public class InventoryManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+    }
+
+    private void Start()
+    {
         SetInventoryUI();
+    }
+
+    public int InventoryContentNum()
+    {
+        return inventoryContent.Count;
     }
 
     public void OpenInventory()
@@ -50,6 +62,11 @@ public class InventoryManager : MonoBehaviour
         GameManager.Instance.isInventoryOpen = true;
         inventoryUI.SetActive(true);
         Time.timeScale = 0;
+
+        if(curInvenNum != inventoryContent.Count)
+        {
+            refreshInventory();
+        }
     }
 
     public void CloseInventory()
@@ -70,8 +87,29 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void AddInventory()
+    private void refreshInventory()
     {
+        int itemNum = 0;
+        for (int j = 0; j < 5; j++)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if (itemNum == inventoryContent.Count)
+                    break;
 
+                inventoryUIIndiv[i, j].GetComponent<Image>().sprite = inventoryContent[itemNum].showSprite();
+
+                itemNum++;
+            }
+
+            if (itemNum == inventoryContent.Count)
+                break;
+        }
+        curInvenNum = inventoryContent.Count;
+    }
+
+    public void AddInventory(Item item)
+    {
+        inventoryContent.Add(item);
     }
 }

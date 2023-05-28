@@ -165,6 +165,19 @@ public class PlayerMove_Rito_Follow : MonoBehaviour
             Com.rBody.constraints = RigidbodyConstraints.FreezeRotation;
         }
 
+        CameraInitialize();
+    }
+
+    public void MainCameraChange()
+    {
+        GameObject mainCam = GameManager.Instance.mainCam.gameObject;
+        Com.fpCamObject.SetActive(false);
+        Com.tpCamObject.SetActive(false);
+        mainCam.SetActive(true);
+    }
+
+    public void CameraInitialize()
+    {
         // Camera
         var allCams = FindObjectsOfType<Camera>();
         foreach (var cam in allCams)
