@@ -20,6 +20,12 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public Camera mainCam;
 
+    public bool isInDRWorldHouse = false;
+    public bool isOnGround = false;
+
+    [SerializeField]
+    private float time;
+
     /***********************************************************************
     *                               SingleTon
     ***********************************************************************/
@@ -54,6 +60,36 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        time += Time.deltaTime;
+        if (time > 2f)
+        {
+            time = 0;
+            playerBugFix();
+        }
+    }
 
+
+    public void playerBugFix()
+    {
+        if (isPuzzleGoing)
+            return;
+
+        if (!isPlayerExist)
+            return;
+
+        if(isInDRWorldHouse)
+        {
+            if(player.transform.position.y < 40f)
+            {
+                player.transform.position = ScenarioManager.Instance.playerSpawnPos.transform.position;
+            }
+        }
+        else if(isOnGround)
+        {
+            if (player.transform.position.y < -10f)
+            {
+                player.transform.position = ScenarioManager.Instance.playerSpawnPosOut.transform.position;
+            }
+        }
     }
 }

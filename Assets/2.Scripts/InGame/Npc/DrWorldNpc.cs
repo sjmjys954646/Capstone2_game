@@ -6,6 +6,7 @@ public class DrWorldNpc : Npc
 {
     bool firstCoverse = true;
     bool puzzleFin = false;
+    bool portalCreated = false;
 
     public override void Print()
     {
@@ -33,6 +34,12 @@ public class DrWorldNpc : Npc
             
             if (player == null)
                 player = GameManager.Instance.player;
+
+            if(scenarioNum == 3 && !portalCreated)
+            {
+                ScenarioManager.Instance.totheGroundPortal.SetActive(true);
+                portalCreated = true;
+            }
 
             player.GetComponent<PlayerStatus>().isTalking = true;
             scenarioManager.ConversationStart(scenarioNum);

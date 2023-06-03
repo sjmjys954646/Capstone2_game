@@ -26,6 +26,9 @@ public class ScenarioManager : MonoBehaviour
     public GameObject tutorial;
     public GameObject KeyGuideUI;
     public GameObject world;
+    public GameObject playerSpawnPos;
+    public GameObject playerSpawnPosOut;
+    public GameObject totheGroundPortal;
 
     public int conversationIdx;
     public int curConversationNum;
@@ -95,6 +98,8 @@ public class ScenarioManager : MonoBehaviour
         KeyGuideUI.SetActive(false);
         world.SetActive(true);
         GameManager.Instance.isTutorial = false;
+        GameManager.Instance.player.transform.position = playerSpawnPos.transform.position;
+        GameManager.Instance.isInDRWorldHouse = true;
 
         Color col = Conversation.transform.GetChild(0).GetComponent<Image>().color;
         col.a = 0.9f;

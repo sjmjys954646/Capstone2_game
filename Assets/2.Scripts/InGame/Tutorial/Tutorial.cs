@@ -13,6 +13,7 @@ public class Tutorial : MonoBehaviour
     public GameObject blackTile;
     public GameObject groundTiles;
     public GameObject guideLine;
+    public GameObject endPortal;
 
     public TMP_Text guideLineText;
     public List<string> guideText;
@@ -62,6 +63,9 @@ public class Tutorial : MonoBehaviour
         {
             StartCoroutine(ShowNext(i, i * 5.0f));
         }
+
+        //Æ©Åä¸®¾ó Æ÷Å» position 0 0 20
+        //StartCoroutine(makePortal((guideText.Count - 1) * 5.0f + 1.0f));
     }
 
     private void TutorialGroundMaker()
@@ -94,5 +98,10 @@ public class Tutorial : MonoBehaviour
         guideLineText.text = guideText[guideIndex];
     }
 
+    IEnumerator makePortal(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        endPortal.SetActive(true);
+    }
 
 }
