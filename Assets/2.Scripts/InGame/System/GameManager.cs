@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public bool isTutorial = false;
     public bool isInventoryOpen = false;
     public bool itemconversationGoing = false;
+    public bool isPuzzleGoing = false;
 
     public int playerAssetNum;
     public List<GameObject> characters = new List<GameObject>();

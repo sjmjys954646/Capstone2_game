@@ -44,6 +44,8 @@ public class PuzzleManager : MonoBehaviour
     {
         GameManager.Instance.player.GetComponent<PlayerMove_Rito_Follow>().MainCameraChange();
         GameManager.Instance.mainCam.orthographic = true;
+        GameManager.Instance.isPuzzleGoing = true;
+        //커서매니저의 puzzle0manager 설정하기
     }
 
     public void PuzzleEnd()
