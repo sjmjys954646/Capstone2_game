@@ -137,6 +137,8 @@ public class ScenarioManager : MonoBehaviour
             return;
 
         talker.text = eventNumDialogue[conversationIdx]["Talker"].ToString();
+        if (talker.text == "³ª")
+            talker.text = GameManager.Instance.playerName;
         content.text = eventNumDialogue[conversationIdx]["Conversation"].ToString();
     }
     #endregion

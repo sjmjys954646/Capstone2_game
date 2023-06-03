@@ -1,4 +1,4 @@
-EventNumber,Talker,Conversation
+﻿EventNumber,Talker,Conversation
 0,<나>,"""…"""
 0,<나>,"""어라? 나 분명 방금까지…"""
 0,<나>,여기는 어디지…? 내가 누구더라...?
@@ -10,3 +10,5 @@ EventNumber,Talker,Conversation
 1,월드박사,…뭐? 어떻게 해야하는지 잘 모르겠다고..? 이것 참 난감한걸..
 1,월드박사,내 연구실을 둘러다보면 기억이 날 지도 몰라. 이것 저것 만져봐
 2,월드박사,주변을 둘러보란말이야
+3,나,나는…
+3,월드박사,나가라고

@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
     public bool itemconversationGoing = false;
     public bool isPuzzleGoing = false;
 
+    public string playerName;
+    public string playerAge;
+
     public int playerAssetNum;
     public List<GameObject> characters = new List<GameObject>();
 

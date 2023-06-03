@@ -5,6 +5,7 @@ using UnityEngine;
 public class DrWorldNpc : Npc
 {
     bool firstCoverse = true;
+    bool puzzleFin = false;
 
     public override void Print()
     {
@@ -22,12 +23,14 @@ public class DrWorldNpc : Npc
         else
         {
             //문제 출력
-            if(InventoryManager.Instance.InventoryContentNum() == 3)
+            if(!puzzleFin && InventoryManager.Instance.InventoryContentNum() == 3)
             {
-                PuzzleManager.Instance.PuzzleStart();
+                PuzzleManager.Instance.PuzzleStart(0);
+                puzzleFin = true;
+                scenarioNum++;
+                return;
             }
             
-
             if (player == null)
                 player = GameManager.Instance.player;
 

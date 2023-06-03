@@ -5,7 +5,12 @@ using UnityEngine;
 public class PuzzleManager : MonoBehaviour
 {
     [SerializeField]
-    public int puzzleNum;
+    public int curpuzzleNum;
+    [SerializeField]
+    List<GameObject> eachPuzzle = new List<GameObject>();
+    [SerializeField]
+    GameObject puzzleBackground;
+
 
 
     /***********************************************************************
@@ -40,16 +45,36 @@ public class PuzzleManager : MonoBehaviour
         }
     }
 
-    public void PuzzleStart()
+    public void PuzzleStart(int puzzleNum)
     {
+        curpuzzleNum = puzzleNum;
         GameManager.Instance.player.GetComponent<PlayerMove_Rito_Follow>().MainCameraChange();
         GameManager.Instance.mainCam.orthographic = true;
         GameManager.Instance.isPuzzleGoing = true;
-        //커서매니저의 puzzle0manager 설정하기
+        puzzleBackground.SetActive(true);
+        eachPuzzle[curpuzzleNum].SetActive(true);
+
+
+        //커서 조정
+        if(!GameManager.Instance.player.GetComponent<PlayerMove_Rito_Follow>().State.isCursorActive)
+        {
+            GameManager.Instance.player.GetComponent<PlayerMove_Rito_Follow>().State.isCursorActive = !GameManager.Instance.player.GetComponent<PlayerMove_Rito_Follow>().State.isCursorActive;
+            GameManager.Instance.player.GetComponent<PlayerMove_Rito_Follow>().ShowCursor(GameManager.Instance.player.GetComponent<PlayerMove_Rito_Follow>().State.isCursorActive);
+        }
     }
+        
 
     public void PuzzleEnd()
     {
         GameManager.Instance.player.GetComponent<PlayerMove_Rito_Follow>().CameraInitialize();
+        GameManager.Instance.isPuzzleGoing = false;
+        puzzleBackground.SetActive(false);
+        eachPuzzle[curpuzzleNum].SetActive(false);
+
+        if (GameManager.Instance.player.GetComponent<PlayerMove_Rito_Follow>().State.isCursorActive)
+        {
+            GameManager.Instance.player.GetComponent<PlayerMove_Rito_Follow>().State.isCursorActive = !GameManager.Instance.player.GetComponent<PlayerMove_Rito_Follow>().State.isCursorActive;
+            GameManager.Instance.player.GetComponent<PlayerMove_Rito_Follow>().ShowCursor(GameManager.Instance.player.GetComponent<PlayerMove_Rito_Follow>().State.isCursorActive);
+        }
     }
 }

@@ -47,13 +47,12 @@ public class CursorManager : MonoBehaviour
 
     private void Update()
     {
-        if(!GameManager.Instance.isPuzzleGoing)
+        if(GameManager.Instance.isPuzzleGoing)
         {
             if(!isCarrying && Input.GetMouseButtonDown(0))
             {
                 if (onCursorObject == null)
                     return;
-
                 if (onCursorObject.tag == "Block")
                 {
                     isCarrying = true;
@@ -97,14 +96,13 @@ public class CursorManager : MonoBehaviour
         if (onCursorObject.tag == "EmptyBlock")
         {
             //정답비교
-            if (puzzle0Manager.GetComponent<Puzzle0Manager>().answerCompare(
+            if (puzzle0Manager.GetComponent<PuzzleEachManager>().answerCompare(
                 onCursorObject.GetComponent<EmptyBlock>().getIndex(),
                 tmp.GetComponent<PuzzleBlock>().getIndex()
                 ))
             {
                 tmp.transform.position = onCursorObject.transform.position;
                 tmp.GetComponent<PuzzleBlock>().finished = true;
-                Debug.Log("heygho");
             }
         }
         yield return null;

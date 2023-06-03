@@ -51,7 +51,7 @@ public class InputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(gameManager.isPlayerExist)
+        if(gameManager.isPlayerExist && !gameManager.isPuzzleGoing)
         {
             if (!gameManager.conversationGoing && !gameManager.itemconversationGoing)
             {
