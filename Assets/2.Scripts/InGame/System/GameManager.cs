@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public Camera mainCam;
 
     public bool isInDRWorldHouse = false;
+    public bool isInKeyLockerRoom = false;
     public bool isOnGround = false;
 
     [SerializeField]
@@ -77,7 +78,7 @@ public class GameManager : MonoBehaviour
         if (!isPlayerExist)
             return;
 
-        if(isInDRWorldHouse)
+        if(isInDRWorldHouse || isInKeyLockerRoom)
         {
             if(player.transform.position.y < 40f)
             {
