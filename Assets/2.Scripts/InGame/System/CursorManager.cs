@@ -10,8 +10,6 @@ public class CursorManager : MonoBehaviour
     private GameObject carryingObject;
     [SerializeField]
     private GameObject onCursorObject;
-    [SerializeField]
-    private GameObject puzzle0Manager;
 
     /***********************************************************************
    *                               SingleTon
@@ -96,7 +94,7 @@ public class CursorManager : MonoBehaviour
         if (onCursorObject.tag == "EmptyBlock")
         {
             //정답비교
-            if (puzzle0Manager.GetComponent<PuzzleEachManager>().answerCompare(
+            if (PuzzleManager.Instance.eachPuzzle[0].GetComponent<PuzzleEachManager>().answerCompare(
                 onCursorObject.GetComponent<EmptyBlock>().getIndex(),
                 tmp.GetComponent<PuzzleBlock>().getIndex()
                 ))
@@ -105,6 +103,17 @@ public class CursorManager : MonoBehaviour
                 tmp.GetComponent<PuzzleBlock>().finished = true;
             }
         }
+        else if (onCursorObject.tag == "EmptyBlock2")
+        {
+            if (PuzzleManager.Instance.eachPuzzle[1].GetComponent<PuzzleEachManager>().answerComparePattern2(
+                onCursorObject.GetComponent<EmptyBlock>().getIndex(),
+                tmp.GetComponent<PuzzleBlock>().getIndex()
+                ))
+                tmp.GetComponent<PuzzleBlock>().finished = true;
+
+            tmp.transform.position = onCursorObject.transform.position;
+        }
+
         yield return null;
     }
 

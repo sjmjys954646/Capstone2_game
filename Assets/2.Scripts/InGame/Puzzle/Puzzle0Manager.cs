@@ -18,6 +18,10 @@ public class Puzzle0Manager : PuzzleEachManager
     [SerializeField]
     private TMP_Text finalCheckText;
 
+    private void Start()
+    {
+        puzzleTotal = gameObject.transform.GetChild(0).GetChild(0).childCount;
+    }
     public void finishedButtonPressed()
     {
         if(puzzleTotalFin == puzzleTotal)

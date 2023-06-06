@@ -481,7 +481,7 @@ MonoBehaviour:
     showCursor: 308
   _movementOption:
     speed: 3
-    runningCoef: 1.5
+    runningCoef: 3
     jumpForce: 5.5
     acceleration: 2
     groundLayerMask:

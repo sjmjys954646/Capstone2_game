@@ -20,10 +20,6 @@ public class PuzzleEachManager : MonoBehaviour
     private GameObject rightImage;
 
 
-    private void Start()
-    {
-        puzzleTotal = gameObject.transform.GetChild(0).GetChild(0).childCount;
-    }
 
     public virtual void answerWrong(int wrongNum)
     {
@@ -40,6 +36,16 @@ public class PuzzleEachManager : MonoBehaviour
         }
         answerWrong(selectBlockIndex);
         StartCoroutine(turnOnWrongImage());
+        return false;
+    }
+
+    public bool answerComparePattern2(int emptyBlockIndex, int selectBlockIndex)
+    {
+        puzzleTotalFin += 1;
+        if (emptyBlockIndex == selectBlockIndex)
+        {
+            return true;
+        }
         return false;
     }
 

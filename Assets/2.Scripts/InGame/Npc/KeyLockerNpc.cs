@@ -24,22 +24,20 @@ public class KeyLockerNpc : Npc
         else
         {
             //문제 출력
-            if (!puzzleFin && InventoryManager.Instance.InventoryContentNum() == 7)
+            if (InventoryManager.Instance.InventoryContentNum() == 4)
+            {
+                scenarioNum++;
+            }
+
+            if(!puzzleFin && scenarioNum == 8)
             {
                 PuzzleManager.Instance.PuzzleStart(1);
                 puzzleFin = true;
-                scenarioNum++;
                 return;
             }
 
             if (player == null)
                 player = GameManager.Instance.player;
-
-            //if (scenarioNum == 3 && !portalCreated)
-            //{
-            //    ScenarioManager.Instance.totheGroundPortal.SetActive(true);
-            //    portalCreated = true;
-            //}
 
             player.GetComponent<PlayerStatus>().isTalking = true;
             scenarioManager.ConversationStart(scenarioNum);

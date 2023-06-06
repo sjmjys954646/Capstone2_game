@@ -38,4 +38,9 @@ public class PuzzleBlock : MonoBehaviour, IPointerEnterHandler
     {
         return index;
     }
+
+    public Vector3 getInitialPos()
+    {
+        return initialPos;
+    }
 }

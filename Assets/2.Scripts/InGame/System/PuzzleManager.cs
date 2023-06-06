@@ -7,7 +7,7 @@ public class PuzzleManager : MonoBehaviour
     [SerializeField]
     public int curpuzzleNum;
     [SerializeField]
-    List<GameObject> eachPuzzle = new List<GameObject>();
+    public List<GameObject> eachPuzzle = new List<GameObject>();
     [SerializeField]
     GameObject puzzleBackground;
 
@@ -54,9 +54,11 @@ public class PuzzleManager : MonoBehaviour
         puzzleBackground.SetActive(true);
         eachPuzzle[curpuzzleNum].SetActive(true);
 
+        if (GameManager.Instance.conversationGoing)
+            ScenarioManager.Instance.ConversationEnd();
 
         //커서 조정
-        if(!GameManager.Instance.player.GetComponent<PlayerMove_Rito_Follow>().State.isCursorActive)
+        if (!GameManager.Instance.player.GetComponent<PlayerMove_Rito_Follow>().State.isCursorActive)
         {
             GameManager.Instance.player.GetComponent<PlayerMove_Rito_Follow>().State.isCursorActive = !GameManager.Instance.player.GetComponent<PlayerMove_Rito_Follow>().State.isCursorActive;
             GameManager.Instance.player.GetComponent<PlayerMove_Rito_Follow>().ShowCursor(GameManager.Instance.player.GetComponent<PlayerMove_Rito_Follow>().State.isCursorActive);
