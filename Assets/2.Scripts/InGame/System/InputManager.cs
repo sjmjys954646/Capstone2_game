@@ -9,6 +9,16 @@ public class InputManager : MonoBehaviour
     private ScenarioManager scenarioInput;
     private GameManager gameManager;
 
+    //for test
+    [SerializeField]
+    private GameObject starPos;
+    [SerializeField]
+    private GameObject guard;
+    [SerializeField]
+    private GameObject starMaker;
+    [SerializeField]
+    private GameObject slymeVisitor;
+
     /***********************************************************************
     *                               SingleTon
     ***********************************************************************/
@@ -64,8 +74,6 @@ public class InputManager : MonoBehaviour
                 gameManager.player.GetComponent<PlayerMove_Rito_Follow>().Jump();
             }
 
-           
-
             if (gameManager.isInventoryOpen)
             {
                 if (Input.GetKeyDown(KeyCode.I))
@@ -79,6 +87,24 @@ public class InputManager : MonoBehaviour
                 {
                     InventoryManager.Instance.OpenInventory();
                 }
+            }
+
+            //testcode
+            if(Input.GetKeyDown(KeyCode.F1))
+            {
+                gameManager.player.transform.position = starPos.transform.position;
+            }
+            if (Input.GetKeyDown(KeyCode.F2))
+            {
+                gameManager.player.transform.position = guard.transform.position;
+            }
+            if (Input.GetKeyDown(KeyCode.F3))
+            {
+                gameManager.player.transform.position = starMaker.transform.position;
+            }
+            if (Input.GetKeyDown(KeyCode.F4))
+            {
+                gameManager.player.transform.position = slymeVisitor.transform.position;
             }
         }
 

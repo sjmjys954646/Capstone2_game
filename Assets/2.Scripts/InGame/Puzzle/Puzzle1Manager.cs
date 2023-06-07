@@ -21,7 +21,7 @@ public class Puzzle1Manager : PuzzleEachManager
 
     public void finishedButtonPressed()
     {
-        if (puzzleTotalFin == puzzleTotal)
+        if (puzzleTotalFin >= puzzleTotal)
         {
             int ans = 0;
             for (int i = 0; i < 4; i++)

@@ -57,6 +57,7 @@ public class ItemManager : MonoBehaviour
     private void fillItems()
     {
         sprites = Resources.LoadAll<Sprite>("item");
+        Array.Sort(sprites, delegate (Sprite x, Sprite y) { return int.Parse(x.name).CompareTo(int.Parse(y.name)); });
 
         for (int itemNumber = 0; itemNumber < excelParser.itemList.Count; itemNumber++)
         {

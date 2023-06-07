@@ -7,6 +7,7 @@ public class KeyLockerNpc : Npc
     bool firstCoverse = true;
     bool puzzleFin = false;
     bool portalCreated = false;
+    bool contentCheck = false;
 
     public override void Print()
     {
@@ -23,17 +24,30 @@ public class KeyLockerNpc : Npc
         }
         else
         {
-            //문제 출력
-            if (InventoryManager.Instance.InventoryContentNum() == 4)
+            //내용확인
+            if (!contentCheck && InventoryManager.Instance.InventoryContentNum() == 7)
             {
                 scenarioNum++;
+                contentCheck = true;
+                player.GetComponent<PlayerStatus>().isTalking = true;
+                scenarioManager.ConversationStart(scenarioNum);
+                return;
             }
 
-            if(!puzzleFin && scenarioNum == 8)
+            //퍼즐 시작
+            if(!puzzleFin && scenarioNum == initscenarioNum + 2)
             {
                 PuzzleManager.Instance.PuzzleStart(1);
                 puzzleFin = true;
+                scenarioNum++;
                 return;
+            }
+
+            //포탈 생성
+            if (scenarioNum == initscenarioNum + 3 && !portalCreated)
+            {
+                ScenarioManager.Instance.totheGroundPortal.SetActive(true);
+                portalCreated = true;
             }
 
             if (player == null)

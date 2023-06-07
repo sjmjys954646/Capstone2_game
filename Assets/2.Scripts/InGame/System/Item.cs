@@ -32,6 +32,11 @@ public class Item : MonoBehaviour
         sprite = itemManager.itemTotalList[itemNumber].sprite;
     }
 
+    public int showItemNumber()
+    {
+        return itemNumber;
+    }
+
     public string showItemName()
     {
         return itemName;

@@ -78,18 +78,25 @@ public class GameManager : MonoBehaviour
         if (!isPlayerExist)
             return;
 
-        if(isInDRWorldHouse || isInKeyLockerRoom)
+        if(isInDRWorldHouse )
         {
             if(player.transform.position.y < 40f)
             {
-                player.transform.position = ScenarioManager.Instance.playerSpawnPos.transform.position;
+                player.transform.position = ScenarioManager.Instance.playerSpawnPosDR.transform.position;
             }
         }
         else if(isOnGround)
         {
-            if (player.transform.position.y < -10f)
+            if (player.transform.position.y < -30f)
             {
                 player.transform.position = ScenarioManager.Instance.playerSpawnPosOut.transform.position;
+            }
+        }
+        else if (isInKeyLockerRoom)
+        {
+            if (player.transform.position.y < 40f)
+            {
+                player.transform.position = ScenarioManager.Instance.playerSpawnPosKey.transform.position;
             }
         }
     }

@@ -10,7 +10,7 @@ public class InventoryManager : MonoBehaviour
     [SerializeField]
     private List<Item> inventoryContent = new List<Item>();
     [SerializeField]
-    private GameObject[,] inventoryUIIndiv = new GameObject[4, 5];
+    private GameObject[,] inventoryUIIndiv = new GameObject[4,5];
 
     private int curInvenNum = 0;
 
@@ -52,6 +52,11 @@ public class InventoryManager : MonoBehaviour
         SetInventoryUI();
     }
 
+    public List<Item> InventoryShow()
+    {
+        return inventoryContent;
+    }
+
     public int InventoryContentNum()
     {
         return inventoryContent.Count;
@@ -78,11 +83,11 @@ public class InventoryManager : MonoBehaviour
 
     private void SetInventoryUI()
     {
-        for(int j = 0;j < 5 ;j++)
+        for(int i = 0;i < 4 ;i++)
         {
-            for (int i = 0; i < 4; i++)
+            for (int j = 0; j < 5; j++)
             {
-                inventoryUIIndiv[i, j] = inventoryUI.transform.GetChild(4 * i + j).gameObject;
+                inventoryUIIndiv[i, j] = inventoryUI.transform.GetChild(5 * i + j).gameObject;
             }
         }
     }
@@ -90,9 +95,9 @@ public class InventoryManager : MonoBehaviour
     private void refreshInventory()
     {
         int itemNum = 0;
-        for (int j = 0; j < 5; j++)
+        for (int i = 0; i < 4; i++)
         {
-            for (int i = 0; i < 4; i++)
+            for (int j = 0; j < 5; j++)
             {
                 if (itemNum == inventoryContent.Count)
                     break;

@@ -26,8 +26,10 @@ public class ScenarioManager : MonoBehaviour
     public GameObject tutorial;
     public GameObject KeyGuideUI;
     public GameObject world;
-    public GameObject playerSpawnPos;
+    public GameObject playerSpawnPosDR;
+    public GameObject playerSpawnPosKey;
     public GameObject playerSpawnPosOut;
+    public GameObject totheKeyLockerPortal;
     public GameObject totheGroundPortal;
 
     public int conversationIdx;
@@ -98,8 +100,14 @@ public class ScenarioManager : MonoBehaviour
         KeyGuideUI.SetActive(false);
         world.SetActive(true);
         GameManager.Instance.isTutorial = false;
-        GameManager.Instance.player.transform.position = playerSpawnPos.transform.position;
-        GameManager.Instance.isInDRWorldHouse = true;
+
+        //주석변경
+
+        GameManager.Instance.player.transform.position = playerSpawnPosOut.transform.position;
+        GameManager.Instance.isOnGround = true;
+
+        //GameManager.Instance.player.transform.position = playerSpawnPosDR.transform.position;
+        //GameManager.Instance.isInDRWorldHouse = true;
 
         Color col = Conversation.transform.GetChild(0).GetComponent<Image>().color;
         col.a = 0.9f;

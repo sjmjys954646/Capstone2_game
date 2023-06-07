@@ -94,7 +94,7 @@ public class CursorManager : MonoBehaviour
         if (onCursorObject.tag == "EmptyBlock")
         {
             //정답비교
-            if (PuzzleManager.Instance.eachPuzzle[0].GetComponent<PuzzleEachManager>().answerCompare(
+            if (PuzzleManager.Instance.eachPuzzle[PuzzleManager.Instance.curpuzzleNum].GetComponent<PuzzleEachManager>().answerCompare(
                 onCursorObject.GetComponent<EmptyBlock>().getIndex(),
                 tmp.GetComponent<PuzzleBlock>().getIndex()
                 ))

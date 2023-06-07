@@ -24,7 +24,7 @@ public class Puzzle0Manager : PuzzleEachManager
     }
     public void finishedButtonPressed()
     {
-        if(puzzleTotalFin == puzzleTotal)
+        if(puzzleTotalFin >= puzzleTotal)
         {
             //Á¾·á
             if(myagePlaceholder.text.Length == 1 || mynamePlaceholder.text.Length == 1)
