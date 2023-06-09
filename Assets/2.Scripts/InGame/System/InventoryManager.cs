@@ -52,6 +52,11 @@ public class InventoryManager : MonoBehaviour
         SetInventoryUI();
     }
 
+    public void SetInventoryUIPos(Vector3 v)
+    {
+        inventoryUI.transform.position = inventoryUI.transform.position + v;
+    }
+
     public List<Item> InventoryShow()
     {
         return inventoryContent;

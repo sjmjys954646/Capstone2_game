@@ -15,10 +15,9 @@ public class PuzzleEachManager : MonoBehaviour
     [SerializeField]
     private TMP_Text informationText;
     [SerializeField]
-    private GameObject wrongImage;
+    protected GameObject wrongImage;
     [SerializeField]
-    private GameObject rightImage;
-
+    protected GameObject rightImage;
 
 
     public virtual void answerWrong(int wrongNum)
@@ -54,14 +53,14 @@ public class PuzzleEachManager : MonoBehaviour
         informationText.text = information[infoNum];
     }
 
-    IEnumerator turnOnWrongImage()
+    public IEnumerator turnOnWrongImage()
     {
         wrongImage.SetActive(true);
         yield return new WaitForSeconds(0.1f);
         wrongImage.SetActive(false);
     }
 
-    IEnumerator turnOnRightImage()
+    public IEnumerator turnOnRightImage()
     {
         rightImage.SetActive(true);
         yield return new WaitForSeconds(0.1f);

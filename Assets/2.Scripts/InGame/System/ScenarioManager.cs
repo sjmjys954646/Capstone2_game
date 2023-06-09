@@ -103,11 +103,11 @@ public class ScenarioManager : MonoBehaviour
 
         //주석변경
 
-        GameManager.Instance.player.transform.position = playerSpawnPosOut.transform.position;
-        GameManager.Instance.isOnGround = true;
+        //GameManager.Instance.player.transform.position = playerSpawnPosOut.transform.position;
+        //GameManager.Instance.isOnGround = true;
 
-        //GameManager.Instance.player.transform.position = playerSpawnPosDR.transform.position;
-        //GameManager.Instance.isInDRWorldHouse = true;
+        GameManager.Instance.player.transform.position = playerSpawnPosDR.transform.position;
+        GameManager.Instance.isInDRWorldHouse = true;
 
         Color col = Conversation.transform.GetChild(0).GetComponent<Image>().color;
         col.a = 0.9f;
