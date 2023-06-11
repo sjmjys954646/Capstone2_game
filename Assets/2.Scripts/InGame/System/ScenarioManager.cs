@@ -20,6 +20,7 @@ public class ScenarioManager : MonoBehaviour
 
     public TMP_Text itemTalker;
     public TMP_Text itemContent;
+    public Image itemImage;
 
     public GameObject itemConversation;
 
@@ -181,6 +182,7 @@ public class ScenarioManager : MonoBehaviour
     {
         itemTalker.text = ItemManager.Instance.itemTotalList[curItemConversationNum].showItemName();
         itemContent.text = ItemManager.Instance.itemTotalList[curItemConversationNum].showItemDescription();
+        itemImage.sprite = ItemManager.Instance.itemTotalList[curItemConversationNum].showSprite();
     }
     #endregion
 

@@ -78,14 +78,16 @@ public class Puzzle4Manager : PuzzleEachManager
         {
             addDamage(attack);
             puzzleTotalFin++;
-            StartCoroutine(turnOnRightImage());
             monsters[curTurn * 2].SetActive(false);
             monsters[curTurn * 2 + 1].SetActive(false);
 
 
             if (puzzleTotalFin == puzzleTotal)
+            {
                 PuzzleManager.Instance.PuzzleEnd();
-
+                return true;
+            }
+            StartCoroutine(turnOnRightImage());
             curTurn++;
             setDamageText();
             monsters[curTurn * 2].SetActive(true);

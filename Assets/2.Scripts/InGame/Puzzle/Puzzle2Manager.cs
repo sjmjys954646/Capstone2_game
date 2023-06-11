@@ -7,7 +7,8 @@ public class Puzzle2Manager : PuzzleEachManager
 {
     private void Start()
     {
-        Restart();
+        puzzleTotal = gameObject.transform.GetChild(0).GetChild(0).childCount;
+        puzzleTotalFin = 0;
     }
 
     public void Restart()
