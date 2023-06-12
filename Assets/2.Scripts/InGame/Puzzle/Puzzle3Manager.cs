@@ -20,11 +20,7 @@ public class Puzzle3Manager : PuzzleEachManager
 
     private void Start()
     {
-        InventoryManager.Instance.OpenInventory();
-        InventoryManager.Instance.SetInventoryUIPos(mvVec);
-        curInvenNum = InventoryManager.Instance.InventoryContentNum();
-        setInfoText(0);
-        StartQuestion();
+        StartCoroutine(startpuzzle());
     }
 
 
@@ -116,5 +112,16 @@ public class Puzzle3Manager : PuzzleEachManager
     {
         base.answerWrong(wrongNum);
         setInfoText(wrongNum);
+    }
+
+    IEnumerator startpuzzle()
+    {
+        yield return new WaitForSeconds(3.1f);
+
+        InventoryManager.Instance.OpenInventory();
+        InventoryManager.Instance.SetInventoryUIPos(mvVec);
+        curInvenNum = InventoryManager.Instance.InventoryContentNum();
+        setInfoText(0);
+        StartQuestion();
     }
 }

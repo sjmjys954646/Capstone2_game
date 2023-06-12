@@ -72,6 +72,7 @@ public class InputManager : MonoBehaviour
                 gameManager.player.GetComponent<PlayerMove_Rito_Follow>().Rotate();
                 gameManager.player.GetComponent<PlayerMove_Rito_Follow>().Move();
                 gameManager.player.GetComponent<PlayerMove_Rito_Follow>().Jump();
+                gameManager.player.GetComponent<PlayerMove_Rito_Follow>().UpdateAnimationParams();
             }
 
             if (gameManager.isInventoryOpen)
@@ -112,7 +113,7 @@ public class InputManager : MonoBehaviour
 
         if (gameManager.conversationGoing)
         {
-            if (Input.GetKeyDown(KeyCode.Return))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 scenarioInput.conversationIdx++;
 
@@ -129,7 +130,7 @@ public class InputManager : MonoBehaviour
 
         if (gameManager.itemconversationGoing)
         {
-            if (Input.GetKeyDown(KeyCode.Return))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 scenarioInput.ItemConversationEnd();
             }

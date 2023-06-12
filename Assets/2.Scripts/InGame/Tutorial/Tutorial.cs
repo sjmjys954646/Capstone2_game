@@ -65,7 +65,7 @@ public class Tutorial : MonoBehaviour
         }
 
         //Æ©Åä¸®¾ó Æ÷Å» position 0 0 20
-        //StartCoroutine(makePortal((guideText.Count - 1) * 5.0f + 1.0f));
+        StartCoroutine(makePortal((guideText.Count - 1) * 5.0f + 1.0f));
     }
 
     private void TutorialGroundMaker()

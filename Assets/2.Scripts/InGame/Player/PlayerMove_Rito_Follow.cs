@@ -18,15 +18,16 @@ public class PlayerMove_Rito_Follow : MonoBehaviour
         public Camera tpCamera;
         public Camera fpCamera;
 
-        [HideInInspector] public Transform tpRig;
-        [HideInInspector] public Transform fpRoot;
-        [HideInInspector] public Transform fpRig;
+        public Transform tpRig;
+        public Transform fpRoot;
+        public Transform fpRig;
+        public Transform walker;
 
-        [HideInInspector] public GameObject tpCamObject;
-        [HideInInspector] public GameObject fpCamObject;
+        public GameObject tpCamObject;
+        public GameObject fpCamObject;
 
-        [HideInInspector] public Rigidbody rBody;
-        [HideInInspector] public Animator anim;
+        public Rigidbody rBody;
+        public Animator anim;
     }
     [Serializable]
     public class KeyOption
@@ -70,8 +71,10 @@ public class PlayerMove_Rito_Follow : MonoBehaviour
     public class AnimatorOption
     {
         public string paramMoveX = "Move X";
-        public string paramMoveY = "Move Y";
         public string paramMoveZ = "Move Z";
+        public string paramDistY = "Dist Y";
+        public string paramGrounded = "Grounded";
+        public string paramJump = "Jump";
     }
     [Serializable]
     public class CharacterState
@@ -94,6 +97,9 @@ public class PlayerMove_Rito_Follow : MonoBehaviour
     public CameraOption CamOption => _cameraOption;
     public AnimatorOption AnimOption => _animatorOption;
     public CharacterState State => _state;
+
+    private float _moveX;
+    private float _moveZ;
 
     [SerializeField] private Components _components = new Components();
     [Space]
@@ -135,6 +141,7 @@ public class PlayerMove_Rito_Follow : MonoBehaviour
         //Rotate();
         //Move();
         //Jump();
+        //UpdateAnimationParams();
     }
 
     #endregion
@@ -154,6 +161,7 @@ public class PlayerMove_Rito_Follow : MonoBehaviour
         Com.fpCamObject = Com.fpCamera.gameObject;
         Com.fpRig = Com.fpCamera.transform.parent;
         Com.fpRoot = Com.fpRig.parent;
+        Com.walker = Com.fpRig.parent;
     }
     private float _groundCheckRadius;
     private void InitSettings()
@@ -267,7 +275,10 @@ public class PlayerMove_Rito_Follow : MonoBehaviour
         else
         {
             if (!State.isCursorActive)
+            {
                 RotateTP();
+                RotateWalker();
+            }
             //RotateFPRoot();
         }
     }
@@ -416,8 +427,61 @@ public class PlayerMove_Rito_Follow : MonoBehaviour
 
         if (Input.GetKeyDown(Key.jump))
         {
+            Com.anim.SetTrigger(AnimOption.paramJump);
+
             Com.rBody.AddForce(Vector3.up * MoveOption.jumpForce, ForceMode.VelocityChange);
         }
+    }
+
+    public void UpdateAnimationParams()
+    {
+        float x, z;
+
+        if (State.isCurrentFp)
+        {
+            x = _moveDir.x;
+            z = _moveDir.z;
+
+            if (State.isRunning)
+            {
+                x *= 2f;
+                z *= 2f;
+            }
+        }
+        else
+        {
+            x = 0f;
+            z = _moveDir.sqrMagnitude > 0f ? 1f : 0f;
+
+            if (State.isRunning)
+            {
+                z *= 2f;
+            }
+        }
+
+        // º¸°£
+        const float LerpSpeed = 0.05f;
+        _moveX = Mathf.Lerp(_moveX, x, LerpSpeed);
+        _moveZ = Mathf.Lerp(_moveZ, z, LerpSpeed);
+
+        Com.anim.SetFloat(AnimOption.paramMoveX, _moveX);
+        Com.anim.SetFloat(AnimOption.paramMoveZ, _moveZ);
+        Com.anim.SetFloat(AnimOption.paramDistY, _distFromGround);
+        Com.anim.SetBool(AnimOption.paramGrounded, State.isGrounded);
+    }
+
+    private void RotateWalker()
+    {
+        if (State.isMoving == false) return;
+
+        Vector3 dir = Com.tpRig.TransformDirection(_moveDir);
+        float currentY = Com.walker.localEulerAngles.y;
+        float nextY = Quaternion.LookRotation(dir, Vector3.up).eulerAngles.y;
+
+        if (nextY - currentY > 180f) nextY -= 360f;
+        else if (currentY - nextY > 180f) nextY += 360f;
+
+        Com.walker.eulerAngles = Vector3.up * Mathf.Lerp(currentY, nextY, 0.1f);
     }
 
     #endregion
