@@ -41,4 +41,14 @@ public class ButtonManager : MonoBehaviour
     {
         SceneManager.LoadScene("InGameScene");
     }
+
+    public void onClickCreditButton()
+    {
+        SceneManager.LoadScene("EndScene");
+    }
+
+    public void onClickEnd()
+    {
+        Application.Quit();
+    }
 }

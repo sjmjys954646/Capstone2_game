@@ -13,6 +13,7 @@ public class InventoryManager : MonoBehaviour
     private GameObject[,] inventoryUIIndiv = new GameObject[4,5];
 
     private int curInvenNum = 0;
+    private int endingNeed = 0;
 
 
     /***********************************************************************
@@ -121,5 +122,17 @@ public class InventoryManager : MonoBehaviour
     public void AddInventory(Item item)
     {
         inventoryContent.Add(item);
+
+        if (item.showItemName() == "용기의증표" || item.showItemName() == "지혜의증표" || item.showItemName() == "힘의증표")
+        {
+            endingNeed++;
+        }
+
+        if(endingNeed == 3)
+        {
+            GameManager.Instance.endGame();
+        }
     }
+
+
 }

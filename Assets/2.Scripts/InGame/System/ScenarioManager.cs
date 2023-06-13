@@ -76,7 +76,13 @@ public class ScenarioManager : MonoBehaviour
 
         FirstScenarioStart();
     }
-    
+
+    public void EndScenario()
+    {
+
+    }
+
+
     public void FirstScenarioStart()
     {
         ConversationStart(0);

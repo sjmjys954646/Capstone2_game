@@ -69,6 +69,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void endGame()
+    {
+        StartCoroutine(endGameCoroutine());
+    }
 
     public void playerBugFix()
     {
@@ -99,5 +103,16 @@ public class GameManager : MonoBehaviour
                 player.transform.position = ScenarioManager.Instance.playerSpawnPosKey.transform.position;
             }
         }
+    }
+
+    IEnumerator endGameCoroutine()
+    {
+        yield return new WaitForSeconds(3f);
+
+        if (conversationGoing)
+            ScenarioManager.Instance.ConversationEnd();
+
+        ScenarioManager.Instance.EndScenario();
+
     }
 }
