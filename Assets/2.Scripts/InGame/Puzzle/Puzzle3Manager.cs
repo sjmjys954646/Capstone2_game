@@ -15,7 +15,6 @@ public class Puzzle3Manager : PuzzleEachManager
 
     private int ans;
     private int curInvenNum;
-    private Vector3 mvVec = new Vector3(0, 50, 0);
     private int ansIdx;
 
     private void Start()
@@ -47,7 +46,6 @@ public class Puzzle3Manager : PuzzleEachManager
         if (puzzleTotalFin == puzzleTotal)
         {
             InventoryManager.Instance.CloseInventory();
-            InventoryManager.Instance.SetInventoryUIPos(-mvVec);
             PuzzleManager.Instance.PuzzleEnd();
             return;
         }
@@ -119,7 +117,6 @@ public class Puzzle3Manager : PuzzleEachManager
         yield return new WaitForSeconds(3.1f);
 
         InventoryManager.Instance.OpenInventory();
-        InventoryManager.Instance.SetInventoryUIPos(mvVec);
         curInvenNum = InventoryManager.Instance.InventoryContentNum();
         setInfoText(0);
         StartQuestion();

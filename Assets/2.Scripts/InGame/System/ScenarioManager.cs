@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class ScenarioManager : MonoBehaviour
 {
@@ -32,6 +33,9 @@ public class ScenarioManager : MonoBehaviour
     public GameObject playerSpawnPosOut;
     public GameObject totheKeyLockerPortal;
     public GameObject totheGroundPortal;
+    public GameObject EndingImage;
+    public GameObject EndingPos;
+    public GameObject DrWorld;
 
     public int conversationIdx;
     public int curConversationNum;
@@ -79,9 +83,45 @@ public class ScenarioManager : MonoBehaviour
 
     public void EndScenario()
     {
+        EndingImage.SetActive(true);
+        world.SetActive(false);
+        StartCoroutine(moveTranslate(EndingImage.transform.GetChild(0)));
+        StartCoroutine(moveTranslate(EndingImage.transform.GetChild(1)));
+        StartCoroutine(moveTranslate(EndingImage.transform.GetChild(2)));
+        StartCoroutine(changeColor());
 
+        //커서 조정
+        if (!GameManager.Instance.player.GetComponent<PlayerMove_Rito_Follow>().State.isCursorActive)
+        {
+            GameManager.Instance.player.GetComponent<PlayerMove_Rito_Follow>().State.isCursorActive = !GameManager.Instance.player.GetComponent<PlayerMove_Rito_Follow>().State.isCursorActive;
+            GameManager.Instance.player.GetComponent<PlayerMove_Rito_Follow>().ShowCursor(GameManager.Instance.player.GetComponent<PlayerMove_Rito_Follow>().State.isCursorActive);
+        }
     }
 
+    private IEnumerator moveTranslate(Transform trans)
+    {
+        float blockMoveSpeed = 50f;
+        Vector3 targetPosition = EndingPos.transform.position;
+
+        while (Vector3.Magnitude(targetPosition - trans.position) >= 0.01f)
+        {
+            trans.Translate((targetPosition - trans.position).normalized * Time.deltaTime * blockMoveSpeed);
+            yield return null;
+        }
+
+        trans.position = targetPosition;
+    }
+
+    private IEnumerator changeColor()
+    {
+        yield return new WaitForSeconds(5f);
+        EndingImage.transform.GetChild(0).gameObject.SetActive(false);
+        EndingImage.transform.GetChild(1).gameObject.SetActive(false);
+        EndingImage.transform.GetChild(2).gameObject.SetActive(false);
+        EndingImage.GetComponent<Image>().color = Color.black;
+        ConversationStart(22);
+        DrWorld.SetActive(true);
+    }
 
     public void FirstScenarioStart()
     {
@@ -144,6 +184,9 @@ public class ScenarioManager : MonoBehaviour
         gameManager.conversationGoing = false;
         if (gameManager.player!=null)
             gameManager.player.GetComponent<PlayerStatus>().isTalking = false;
+
+        if (curConversationNum == 22)
+            SceneManager.LoadScene("EndScene");
     }
 
     public void GetEventNumberDialogue(int eventNum)
